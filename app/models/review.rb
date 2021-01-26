@@ -7,13 +7,14 @@ class Review < ApplicationRecord
   validates :user, :uniqueness => {scope: :shop}
   # Ex:- scope :active, -> {where(:active => true)}
   
-  scope :avg_rating, -> {self.average(:rating)}
+  # scope :avg_rating, -> {self.average(:rating).to_i}
 
-  def blank_stars #check how to show starts
-    5 - rating.to_i
-   end
+ 
+  # def blank_stars #check how to show starts
+  #   Review.average(:rating).to_i
+  #  end
 
-   def name_state
+  def name_state
    self.shop.state.name
   end
 
@@ -22,7 +23,9 @@ class Review < ApplicationRecord
   end
 
   def count_reviews
-    Review.count(:rating)
+    count = Shop.find_by_id(shop_id)
+    count.reviews.size
+    #count(:rating)
   end
 
 
